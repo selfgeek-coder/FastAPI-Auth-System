@@ -1,10 +1,12 @@
 import sqlite3
 from contextlib import contextmanager
 
-conn = sqlite3.connect("data.db")
+from config import db_name as db
+
+conn = sqlite3.connect(db)
 
 def init_db():
-    with sqlite3.connect("data.db") as conn:
+    with sqlite3.connect(db) as conn:
         cursor = conn.cursor()
         
         cursor.execute('''
@@ -19,7 +21,7 @@ def init_db():
 
 @contextmanager
 def get_db_connection(): # контекстный менедж
-    conn = sqlite3.connect("data.db")
+    conn = sqlite3.connect(db)
     try:
         yield conn
     finally:
